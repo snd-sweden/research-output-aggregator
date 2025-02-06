@@ -25,10 +25,10 @@ bool isLatestVersion
 `pip install .`
 
 ## Development stuff to do
-[x] ROR get name variants from ROR
-[x] CLI add options to get name list from txt
-[ ] DataCite API build query for matching publisher and affiliation
-[ ] Crossref API build query for matching publisher and affiliation
+- [x] ROR get name variants from ROR
+- [x] CLI add options to get name list from txt
+- [ ] DataCite API build query for matching publisher and affiliation
+- [ ] Crossref API build query for matching publisher and affiliation
 
 
 ## Run during development
