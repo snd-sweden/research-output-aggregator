@@ -1,12 +1,10 @@
 from typing import List
 from roagg.ror import get_names_from_ror
+from roagg.datacite import create_datacite_query_string
 
 def aggregate(name: List[str] = [], ror: str = ""):
-    # wip, just a placeholder for printing the arguments
+    # if ror is provided, get the name from the ror api
     if ror:
-        print(f"ROR-ID: {ror}")
-        print("names:", get_names_from_ror(ror))
-    if name:
-        for n in name:
-            print(f"name: {n}")
-
+        ror_name = get_names_from_ror(ror)
+        name.extend(ror_name)
+    print(create_datacite_query_string(name, ror))

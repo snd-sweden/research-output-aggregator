@@ -10,8 +10,5 @@ def get_ror_info(ror: str):
 
 def get_names_from_ror(ror: str):
     names = get_ror_info(ror)['names']
-    result = []
-    for n in names:
-        if n['lang'] == 'en' and ("alias" in n['types'] or "ror_display" in n['types']):
-            result.append(n['value'])
-    return result
+    valid_types = {'alias', 'ror_display', 'label'}
+    return [n['value'] for n in names if valid_types.intersection(n['types'])]
