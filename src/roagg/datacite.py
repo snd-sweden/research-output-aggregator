@@ -1,4 +1,6 @@
 from typing import List
+import urllib.request
+import json
 
 def create_datacite_query_string(name: List[str] = [], ror: str = ""):
     if not name and not ror:
@@ -21,3 +23,24 @@ def create_datacite_query_string(name: List[str] = [], ror: str = ""):
         query_parts.append(f'publisher.publisherIdentifier:"{ror}"')
     
     return " OR ".join(query_parts)
+
+def datacite_query_result_count(query: str) -> int:
+    """Get total number of results for a DataCite query."""
+    if not query:
+        return 0
+        
+    try:
+        params = urllib.parse.urlencode({
+            'page[size]': 0,
+            'query': query
+        })
+        url = f"https://api.datacite.org/dois?{params}"
+        
+        with urllib.request.urlopen(url) as response:
+            data = json.loads(response.read())
+            return data["meta"]["total"]
+            
+    except (urllib.error.URLError, json.JSONDecodeError, KeyError) as e:
+        raise RuntimeError(f"Failed to get result count from DataCite: {e}")
+
+

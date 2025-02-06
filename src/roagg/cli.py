@@ -61,10 +61,6 @@ def main() -> None:
     if args.name_txt:
         names.extend(read_names_from_file(args.name_txt))
 
-    if not names:
-        logging.error("No organization name(s) provided")
-        sys.exit(1)
-
     try:
         aggregate(names, args.ror)
     except Exception as e:
