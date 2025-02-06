@@ -1,11 +1,11 @@
 [project]
 name = "roagg"
-version = "2025.0.0"
+version = "2025.0.2"
 requires-python = ">=3.10"
 dependencies = []
 
 [project.scripts]
-roagg = "roagg.cli:app"
+roagg = "roagg.cli:main"
 
 [project.entry-points."pipx.run"]
-roagg = "roagg.cli:app"
+roagg = "roagg.cli:main"

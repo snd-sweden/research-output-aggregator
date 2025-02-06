@@ -1,4 +1,6 @@
-# Research output aggregator
+# Research output aggregator 
+[!NOTE]  
+> This script is under development
 
 The goal of this project is to create a script to get a summarization for a research organization about the research output.  
 First target is to query and process information from DataCite.  
@@ -21,8 +23,11 @@ bool haveContributorAffiliation
 bool isLatestVersion
 ```
 
-## Install dependencies
+## Install
 `pip install .`
+
+## Install dev
+`pip install -e .`
 
 ## Development stuff to do
 - [x] ROR get name variants from ROR
@@ -30,10 +35,9 @@ bool isLatestVersion
 - [ ] DataCite API build query for matching publisher and affiliation
 - [ ] Crossref API build query for matching publisher and affiliation
 
+## Run
+List arguments:  
+`roagg --help`  
 
-## Run during development
-`PYTHONPATH=src python src/roagg/cli.py --help`  
-
-`PYTHONPATH=src python src/roagg/cli.py --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name_txt tests/name-lists/gu.txt`
-
-
+Specify some name params:  
+`roagg --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name-txt tests/name-lists/gu.txt`
