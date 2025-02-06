@@ -1,5 +1,5 @@
 # Research output aggregator 
-[!NOTE]  
+> [!NOTE]
 > This script is under development
 
 The goal of this project is to create a script to get a summarization for a research organization about the research output.  
@@ -40,4 +40,6 @@ List arguments:
 `roagg --help`  
 
 Specify some name params:  
-`roagg --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name-txt tests/name-lists/gu.txt`
+```bash
+roagg --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name-txt tests/name-lists/gu.txt
+```
