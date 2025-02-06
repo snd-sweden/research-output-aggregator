@@ -7,4 +7,9 @@ def aggregate(name: List[str] = [], ror: str = ""):
     if ror:
         ror_name = get_names_from_ror(ror)
         name.extend(ror_name)
+    
+    # remove duplicates
+    name = list(set(name))
+
+    # debug print of the query string
     print(create_datacite_query_string(name, ror))

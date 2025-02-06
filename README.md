@@ -24,6 +24,16 @@ bool isLatestVersion
 ## Install dependencies
 `pip install .`
 
+## Development stuff to do
+[x] ROR get name variants from ROR
+[x] CLI add options to get name list from txt
+[ ] DataCite API build query for matching publisher and affiliation
+[ ] Crossref API build query for matching publisher and affiliation
+
+
 ## Run during development
-`PYTHONPATH=src python src/roagg/cli.py`
+`PYTHONPATH=src python src/roagg/cli.py --help`  
+
+`PYTHONPATH=src python src/roagg/cli.py --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name_txt tests/name-lists/gu.txt`
+
 
