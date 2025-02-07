@@ -39,7 +39,18 @@ bool isLatestVersion
 List arguments:  
 `roagg --help`  
 
-Specify some name params:  
+### Some example arguments
+Chalmers with ror and name list:  
+```bash
+roagg --ror https://ror.org/040wg7k59 --name-txt tests/name-lists/chalmers.txt
+```
+
+GU with ror, name list and extra name not in the text file:  
 ```bash
 roagg --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name-txt tests/name-lists/gu.txt
+```
+
+KTH with ror and name list:  
+```bash
+roagg --ror https://ror.org/026vcq606 --name-txt tests/name-lists/kth.txt
 ```
