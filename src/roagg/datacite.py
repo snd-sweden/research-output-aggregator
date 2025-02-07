@@ -2,7 +2,7 @@ from typing import List
 import urllib.request
 import json
 
-def create_datacite_query_string(name: List[str] = [], ror: str = ""):
+def create_datacite_query_string(name: List[str] = [], ror: str = "") -> str:
     if not name and not ror:
         return ""
         
