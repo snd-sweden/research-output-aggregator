@@ -10,19 +10,22 @@ def create_datacite_query_string(name: List[str] = [], ror: str = "") -> str:
     
     if name:
         name_conditions = ' OR '.join(f'"{n}"' for n in name)
-        fields = [
+        name_fields = [
             "creators.affiliation.name",
             "contributors.affiliation.name", 
             "publisher.name"
         ]
         
-        name_queries = [f"{field}:({name_conditions})" for field in fields]
-        query_parts.extend(name_queries)
+        query_parts.extend([f"{field}:({name_conditions})" for field in name_fields])
     
     if ror:
-        query_parts.append(f'publisher.publisherIdentifier:"{ror}"')
-        query_parts.append(f'creators.affiliation.affiliationIdentifier:"{ror}"')
-        query_parts.append(f'contributors.affiliation.affiliationIdentifier:"{ror}"')
+        ror_fields = [
+            "publisher.publisherIdentifier",
+            "creators.affiliation.affiliationIdentifier", 
+            "contributors.affiliation.affiliationIdentifier"
+        ]
+
+        query_parts.extend([f'{field}:"{ror}"' for field in ror_fields])
     
     return " OR ".join(query_parts)
 
@@ -44,5 +47,3 @@ def datacite_query_result_count(query: str) -> int:
             
     except (urllib.error.URLError, json.JSONDecodeError, KeyError) as e:
         raise RuntimeError(f"Failed to get result count from DataCite: {e}")
-
-
