@@ -21,6 +21,8 @@ def create_datacite_query_string(name: List[str] = [], ror: str = ""):
     
     if ror:
         query_parts.append(f'publisher.publisherIdentifier:"{ror}"')
+        query_parts.append(f'creators.affiliation.affiliationIdentifier:"{ror}"')
+        query_parts.append(f'contributors.affiliation.affiliationIdentifier:"{ror}"')
     
     return " OR ".join(query_parts)
 
