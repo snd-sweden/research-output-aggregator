@@ -48,6 +48,13 @@ def main() -> None:
         help="ROR ID of the organization (must start with https://ror.org/)"
     )
 
+    parser.add_argument(
+        "--source",
+        default="api",
+        choices=["api"],
+        help="Source for resource aggregation (only api is supported right now)"
+    )
+
     args = parser.parse_args()
 
     if not any(vars(args).values()):
