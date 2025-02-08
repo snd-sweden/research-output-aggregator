@@ -1,5 +1,6 @@
 from typing import List
 import urllib.request
+import logging
 import json
 
 def create_datacite_query_string(name: List[str] = [], ror: str = "") -> str:
@@ -13,7 +14,9 @@ def create_datacite_query_string(name: List[str] = [], ror: str = "") -> str:
         name_fields = [
             "creators.affiliation.name",
             "contributors.affiliation.name", 
-            "publisher.name"
+            "publisher.name",
+            "creators.name",
+            "contributors.name"
         ]
         
         query_parts.extend([f"{field}:({name_conditions})" for field in name_fields])
@@ -55,8 +58,7 @@ def api_all(query: str) -> list:
     while True:
         response = get_api_result(url)
         result.extend(response["data"])
-        print(f"Retrieved {len(result)} DOIs")
-
+        logging.info(f"Retrieved {len(result)} of {response['meta']['total']}")
         if response['links'].get('next'):
             url = response['links']['next']
         else:
