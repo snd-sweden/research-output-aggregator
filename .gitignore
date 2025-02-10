@@ -33,3 +33,6 @@ coverage.xml
 
 # Virtualenv
 .venv/
+
+# Data dir
+data/
