@@ -2,6 +2,8 @@ from typing import List
 import urllib.request
 import logging
 import json
+from roagg.research_output_item import ResearchOutputItem
+from roagg.utils import match_patterns
 
 class DataCiteAPI:
     def __init__(self, page_size: int = 500, name: List[str] = [], ror: str = ""):
@@ -58,6 +60,50 @@ class DataCiteAPI:
                 return json.loads(response.read())
         except (urllib.error.URLError, json.JSONDecodeError, KeyError) as e:
             raise RuntimeError(f"Failed run DataCite query: {e}")
+    
+    def get_record(self, item: dict) -> ResearchOutputItem:
+        attributes = item.get("attributes", {})
+        publisher_attr = attributes.get("publisher", {})
+
+        record = ResearchOutputItem(
+            doi=attributes.get("doi"),
+            resourceType=attributes.get("types", None).get("citeproc"),
+            publisher=publisher_attr.get("name"),
+            publicationYear=attributes.get("publicationYear"),
+        )
+
+        if record.resourceType is None or record.resourceType == "":
+            record.resourceType = attributes.get("types", {}).get("bibtex")
+
+        record.isPublisher = (
+            publisher_attr.get("publisherIdentifier") == self.ror or 
+            match_patterns(publisher_attr.get("name"), self.name)
+        )
+
+        for relation in attributes.get("relatedIdentifiers", []):
+            if relation.get("relationType") == "IsPreviousVersionOf":
+                record.isLatestVersion = False
+            if relation.get("relationType") == "HasVersion":
+                record.isLatestVersion = False
+
+        record.haveCreatorAffiliation = self.check_agent_list_match(attributes.get("creators", []))
+        record.haveContributorAffiliation = self.check_agent_list_match(attributes.get("contributors", []))
+        return record
+
+    def check_agent_list_match(self, items: list) -> bool:
+        for agent in items:
+            # Check if any nameIdentifier matches the ror
+            if any(identifier.get("nameIdentifier") == self.ror for identifier in agent.get("nameIdentifiers", [])):
+                return True
+            # Check if the agent name matches any pattern
+            if match_patterns(agent.get("name"), self.name):
+                return True
+            # Check each affiliation
+            for affiliation in agent.get("affiliation", []):
+                if (affiliation.get("affiliationIdentifier") == self.ror or 
+                        match_patterns(affiliation.get("name"), self.name)):
+                    return True
+        return False
 
     def all(self) -> list:
         result = []

@@ -55,6 +55,12 @@ def main() -> None:
         help="Source for resource aggregation (only api is supported right now)"
     )
 
+    parser.add_argument(
+        "--output",
+        default="data/output.csv",
+        help="name of the output file"
+    )
+
     args = parser.parse_args()
 
     if not any(vars(args).values()):
@@ -69,7 +75,7 @@ def main() -> None:
         names.extend(read_names_from_file(args.name_txt))
 
     try:
-        aggregate(names, args.ror)
+        aggregate(names, args.ror, args.output)
     except Exception as e:
         logging.error(f"Aggregation failed: {e}")
         sys.exit(1)
