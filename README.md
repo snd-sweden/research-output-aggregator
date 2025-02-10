@@ -42,15 +42,20 @@ List arguments:
 ### Some example arguments
 Chalmers with ror and name list:  
 ```bash
-roagg --ror https://ror.org/040wg7k59 --name-txt tests/name-lists/chalmers.txt
+roagg --ror https://ror.org/040wg7k59 --name-txt tests/name-lists/chalmers.txt --output chalmers.csv
 ```
 
 GU with ror, name list and extra name not in the text file:  
 ```bash
-roagg --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name-txt tests/name-lists/gu.txt
+roagg --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name-txt tests/name-lists/gu.txt --output gu.csv
 ```
 
 KTH with ror and name list:  
 ```bash
-roagg --ror https://ror.org/026vcq606 --name-txt tests/name-lists/kth.txt
+roagg --ror https://ror.org/026vcq606 --name-txt tests/name-lists/kth.txt --output kth.csv
+```
+
+KAU with ror:  
+```bash
+roagg --ror https://ror.org/05s754026 --output kau.csv
 ```

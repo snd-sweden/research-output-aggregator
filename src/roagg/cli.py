@@ -58,19 +58,20 @@ def main() -> None:
     parser.add_argument(
         "--output",
         default="data/output.csv",
-        help="name of the output file"
+        help="name of the output file (default: data/output.csv)"
     )
 
     args = parser.parse_args()
 
-    if not any(vars(args).values()):
+    # print parser.print_help() if no argument for name, name-txt or ror is provided
+    if not any([args.name, args.name_txt, args.ror]):
         parser.print_help()
-        return
+        sys.exit(1)
 
     names: List[str] = []
     if args.name:
         names = args.name
-    
+
     if args.name_txt:
         names.extend(read_names_from_file(args.name_txt))
 
