@@ -34,6 +34,7 @@ def aggregate(name: List[str] = [], ror: str = "", output: str = "output.csv") -
 def write_csv(records: List[str], output: str) -> None:
     header = [
                 "doi", 
+                "clientId",
                 "publicationYear", 
                 "resourceType", 
                 "publisher", 
@@ -47,13 +48,14 @@ def write_csv(records: List[str], output: str) -> None:
         writer.writerow(header)
         writer.writerows([
             [
-                r.doi, 
-                r.publicationYear, 
-                r.resourceType, 
-                r.publisher, 
-                r.isPublisher, 
-                r.haveCreatorAffiliation, 
-                r.haveContributorAffiliation, 
+                r.doi,
+                r.clientId,
+                r.publicationYear,
+                r.resourceType,
+                r.publisher,
+                r.isPublisher,
+                r.haveCreatorAffiliation,
+                r.haveContributorAffiliation,
                 r.isLatestVersion
             ]
             for r in records

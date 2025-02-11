@@ -67,6 +67,7 @@ class DataCiteAPI:
 
         record = ResearchOutputItem(
             doi=attributes.get("doi"),
+            clientId=item["relationships"]["client"]["data"]["id"],
             resourceType=attributes.get("types", None).get("citeproc"),
             publisher=publisher_attr.get("name"),
             publicationYear=attributes.get("publicationYear"),

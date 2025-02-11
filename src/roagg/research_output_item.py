@@ -3,6 +3,7 @@ from dataclasses import dataclass
 @dataclass
 class ResearchOutputItem:
     doi: str
+    clientId: str
     publicationYear: int
     resourceType: str
     publisher: str

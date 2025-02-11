@@ -15,6 +15,7 @@ input: ROR-id and list of variants on the organization name.
 Properties to collect for each research output:
 ```
 string doi
+string clientId
 int publicationYear
 string resourceType
 bool isPublisher
