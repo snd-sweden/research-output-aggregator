@@ -73,6 +73,7 @@ class DataCiteAPI:
             resourceType=attributes.get("types", None).get("citeproc"),
             publisher=publisher_attr.get("name"),
             publicationYear=attributes.get("publicationYear"),
+            title=item["attributes"]["titles"][0]["title"],
         )
 
         if record.resourceType is None or record.resourceType == "":

@@ -6,6 +6,7 @@ class ResearchOutputItem:
     clientId: str
     publicationYear: int
     resourceType: str
+    title: str
     publisher: str
     isPublisher: bool = False
     haveCreatorAffiliation: bool = False

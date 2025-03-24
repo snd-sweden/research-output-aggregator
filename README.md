@@ -61,3 +61,8 @@ KAU with ror:
 ```bash
 roagg --ror https://ror.org/05s754026 --output kau.csv
 ```
+
+Chalmers with ror, name list and with (first) publication title included in output:  
+```bash
+roagg --ror https://ror.org/040wg7k59 --name-txt tests/name-lists/chalmers.txt --titles true --output chalmers.csv
+```
