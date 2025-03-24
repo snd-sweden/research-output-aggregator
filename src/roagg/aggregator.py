@@ -41,7 +41,8 @@ def write_csv(records: List[str], output: str) -> None:
                 "isPublisher", 
                 "haveCreatorAffiliation", 
                 "haveContributorAffiliation", 
-                "isLatestVersion"
+                "isLatestVersion",
+                "isConceptDoi"
             ]
     with open(output, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
@@ -56,7 +57,8 @@ def write_csv(records: List[str], output: str) -> None:
                 r.isPublisher,
                 r.haveCreatorAffiliation,
                 r.haveContributorAffiliation,
-                r.isLatestVersion
+                r.isLatestVersion,
+                r.isConceptDoi
             ]
             for r in records
         ])

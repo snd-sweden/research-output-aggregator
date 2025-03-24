@@ -11,3 +11,4 @@ class ResearchOutputItem:
     haveCreatorAffiliation: bool = False
     haveContributorAffiliation: bool = False
     isLatestVersion: bool = True
+    isConceptDoi: bool = False

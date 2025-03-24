@@ -22,9 +22,9 @@ class DataCiteAPI:
             name_fields = [
                 "creators.affiliation.name",
                 "contributors.affiliation.name", 
-                "publisher.name",
-                "creators.name",
-                "contributors.name"
+                "publisher.name"
+                # "creators.name",
+                # "contributors.name"
             ]
             
             query_parts.extend([f"{field}:({name_conditions})" for field in name_fields])
@@ -64,6 +64,8 @@ class DataCiteAPI:
     def get_record(self, item: dict) -> ResearchOutputItem:
         attributes = item.get("attributes", {})
         publisher_attr = attributes.get("publisher", {})
+        versionCount = 0 if attributes.get("versionCount", {}) is None else int(attributes.get("versionCount", {}))
+        versionOfCount = 0 if attributes.get("versionOfCount", {}) is None else int(attributes.get("versionOfCount", {}))
 
         record = ResearchOutputItem(
             doi=attributes.get("doi"),
@@ -86,6 +88,11 @@ class DataCiteAPI:
                 record.isLatestVersion = False
             if relation.get("relationType") == "HasVersion":
                 record.isLatestVersion = False
+
+        record.isConceptDoi = (
+            versionCount > 0 and
+            versionOfCount == 0   
+        )
 
         record.haveCreatorAffiliation = self.check_agent_list_match(attributes.get("creators", []))
         record.haveContributorAffiliation = self.check_agent_list_match(attributes.get("contributors", []))

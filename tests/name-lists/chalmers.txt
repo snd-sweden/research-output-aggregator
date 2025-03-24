@@ -1,8 +1,10 @@
-chalmers university
+chalmers universit*
+chalmers hogskola*
 chalmers university of technology*
+universit* chalmers
 university of chalmers
-onsala
+onsala *
 chalmers onsala
 chalmers tech*
 chalmers tekn*
-chalmers
+department * chalmers

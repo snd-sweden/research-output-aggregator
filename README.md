@@ -22,6 +22,7 @@ bool isPublisher
 bool haveCreatorAffiliation
 bool haveContributorAffiliation
 bool isLatestVersion
+bool isConceptDoi
 ```
 
 ## Install
