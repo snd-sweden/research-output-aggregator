@@ -36,6 +36,7 @@ bool isConceptDoi
 - [x] CLI add options to get name list from txt
 - [x] DataCite API build query for matching publisher and affiliation
 - [ ] Crossref API build query for matching publisher and affiliation
+- [ ] Publish as cmd tool on PyPI
 
 ## Run
 List arguments:  
