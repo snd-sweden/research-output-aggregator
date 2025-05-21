@@ -40,7 +40,7 @@ def write_csv(records: List[str], output: str,) -> None:
                 "doi", 
                 "clientId",
                 "publicationYear", 
-                "resourceType"
+                "resourceType",
                 "publisher", 
                 "isPublisher", 
                 "haveCreatorAffiliation", 
@@ -59,11 +59,11 @@ def write_csv(records: List[str], output: str,) -> None:
                 r.publicationYear,
                 r.resourceType,
                 r.publisher,
-                r.isPublisher,
-                r.haveCreatorAffiliation,
-                r.haveContributorAffiliation,
-                r.isLatestVersion,
-                r.isConceptDoi
+                1 if r.isPublisher else 0,
+                1 if r.haveCreatorAffiliation else 0,
+                1 if r.haveContributorAffiliation else 0,
+                1 if r.isLatestVersion else 0,
+                1 if r.isConceptDoi else 0
             ]
             for r in records
         ])
@@ -73,7 +73,7 @@ def write_csv_with_titles(records: List[str], output: str,) -> None:
                 "doi", 
                 "clientId",
                 "publicationYear", 
-                "resourceType"
+                "resourceType",
                 "title", 
                 "publisher", 
                 "isPublisher", 
@@ -86,6 +86,7 @@ def write_csv_with_titles(records: List[str], output: str,) -> None:
     with open(output, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(header)
+        
         writer.writerows([
             [
                 r.doi,
@@ -94,11 +95,11 @@ def write_csv_with_titles(records: List[str], output: str,) -> None:
                 r.resourceType,
                 r.title,
                 r.publisher,
-                r.isPublisher,
-                r.haveCreatorAffiliation,
-                r.haveContributorAffiliation,
-                r.isLatestVersion,
-                r.isConceptDoi
+                1 if r.isPublisher else 0,
+                1 if r.haveCreatorAffiliation else 0,
+                1 if r.haveContributorAffiliation else 0,
+                1 if r.isLatestVersion else 0,
+                1 if r.isConceptDoi else 0
             ]
             for r in records
         ])
