@@ -48,6 +48,7 @@ class DataCiteAPI:
             page_size = self.page_size
         params = urllib.parse.urlencode({
             'page[size]': page_size,
+            'page[cursor]': '1',
             'affiliation': 'true',
             'publisher': 'true',
             'detail': 'true',
