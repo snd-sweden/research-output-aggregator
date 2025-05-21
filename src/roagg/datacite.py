@@ -38,6 +38,8 @@ class DataCiteAPI:
                 "contributors.nameIdentifiers.nameIdentifier"
             ]
             query_parts.extend([f'{field}:"{self.ror}"' for field in ror_fields])
+            # nameIdentifiers are formated without https://ror.org/ prefix from some sources, so we need to check both
+            query_parts.extend([f'{field}:"{self.ror.split("https://ror.org/")[1]}"' for field in ror_fields])
         
         return " OR ".join(query_parts)
 
@@ -100,9 +102,13 @@ class DataCiteAPI:
         return record
 
     def check_agent_list_match(self, items: list) -> bool:
+        partial_ror = self.ror.split("https://ror.org/")[1] if self.ror else ""
         for agent in items:
             # Check if any nameIdentifier matches the ror
             if any(identifier.get("nameIdentifier") == self.ror for identifier in agent.get("nameIdentifiers", [])):
+                return True
+            # Check if any nameIdentifier matches the partial ror
+            if any(identifier.get("nameIdentifier") == partial_ror for identifier in agent.get("nameIdentifiers", [])):
                 return True
             # Check if the agent name matches any pattern
             if match_patterns(agent.get("name"), self.name):
