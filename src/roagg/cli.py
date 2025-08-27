@@ -61,13 +61,6 @@ def main() -> None:
         help="name of the output file (default: data/output.csv)"
     )
 
-    parser.add_argument(
-        "--titles",
-        type=str,
-        default="false",
-        help="Set to true if titles should be included in the output as an extra column (default: false)"
-    )
-
     args = parser.parse_args()
 
     # print parser.print_help() if no argument for name, name-txt or ror is provided
@@ -83,7 +76,7 @@ def main() -> None:
         names.extend(read_names_from_file(args.name_txt))
 
     try:
-        aggregate(names, args.ror, args.output, args.titles)
+        aggregate(names, args.ror, args.output)
     except Exception as e:
         logging.error(f"Aggregation failed: {e}")
         sys.exit(1)

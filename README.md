@@ -18,6 +18,7 @@ string doi
 string clientId
 int publicationYear
 string resourceType
+string title
 bool isPublisher
 bool haveCreatorAffiliation
 bool haveContributorAffiliation
@@ -55,7 +56,7 @@ roagg --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn
 
 KTH with ror and name list:  
 ```bash
-roagg --ror https://ror.org/026vcq606 --name-txt tests/name-lists/kth.txt --output kth.csv
+roagg --ror https://ror.org/026vcq606 --name-txt tests/name-lists/kth.txt --output data/kth.csv
 ```
 
 KAU with ror:  
@@ -63,7 +64,7 @@ KAU with ror:
 roagg --ror https://ror.org/05s754026 --output kau.csv
 ```
 
-Chalmers with ror, name list and with (first) publication title included in output:  
+Chalmers with ror, name list:  
 ```bash
-roagg --ror https://ror.org/040wg7k59 --name-txt tests/name-lists/chalmers.txt --titles true --output chalmers.csv
+roagg --ror https://ror.org/040wg7k59 --name-txt tests/name-lists/chalmers.txt --output chalmers.csv
 ```
