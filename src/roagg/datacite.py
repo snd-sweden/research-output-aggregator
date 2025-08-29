@@ -74,14 +74,17 @@ class DataCiteAPI:
         record = ResearchOutputItem(
             doi=attributes.get("doi"),
             clientId=item["relationships"]["client"]["data"]["id"],
-            resourceType=attributes.get("types", None).get("citeproc"),
+            resourceType=attributes.get("types", None).get("resourceTypeGeneral"),
             publisher=publisher_attr.get("name"),
             publicationYear=attributes.get("publicationYear"),
             title=item["attributes"]["titles"][0]["title"],
         )
 
         if record.resourceType is None or record.resourceType == "":
+            record.resourceType = attributes.get("types", {}).get("citeproc")
+        if record.resourceType is None or record.resourceType == "":
             record.resourceType = attributes.get("types", {}).get("bibtex")
+            
 
         record.isPublisher = (
             publisher_attr.get("publisherIdentifier") == self.ror or 
