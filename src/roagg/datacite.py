@@ -52,6 +52,7 @@ class DataCiteAPI:
             'affiliation': 'true',
             'publisher': 'true',
             'detail': 'true',
+            'disable-facets': 'false',
             'query': self.get_query_string()
         })
         return f"https://api.datacite.org/dois?{params}"
