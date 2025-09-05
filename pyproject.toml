@@ -9,3 +9,13 @@ roagg = "roagg.cli:main"
 
 [project.entry-points."pipx.run"]
 roagg = "roagg.cli:main"
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
