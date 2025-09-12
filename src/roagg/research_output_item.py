@@ -8,6 +8,8 @@ class ResearchOutputItem:
     resourceType: str
     title: str
     publisher: str
+    createdAt: str = ""
+    updatedAt: str = "" 
     isPublisher: bool = False
     haveCreatorAffiliation: bool = False
     haveContributorAffiliation: bool = False

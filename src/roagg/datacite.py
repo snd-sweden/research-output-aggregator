@@ -91,6 +91,14 @@ class DataCiteAPI:
             match_patterns(publisher_attr.get("name"), self.name)
         )
 
+        record.createdAt = str(attributes.get("created", "") or "")
+
+        record.updatedAt = max([
+            str(attributes.get("updated", "") or ""),
+            str(attributes.get("created", "") or ""),
+            str(attributes.get("registered", "") or "")
+        ])
+
         for relation in attributes.get("relatedIdentifiers", []):
             if relation.get("relationType") == "IsPreviousVersionOf":
                 record.isLatestVersion = False
