@@ -59,8 +59,10 @@ class DataCiteAPI:
 
     @staticmethod
     def get_api_result(url: str) -> dict:
+        request = urllib.request.Request(url)
+        request.add_header('User-Agent', 'Research output aggregator')
         try:
-            with urllib.request.urlopen(url) as response:
+            with urllib.request.urlopen(request) as response:
                 return json.loads(response.read())
         except (urllib.error.URLError, json.JSONDecodeError, KeyError) as e:
             raise RuntimeError(f"Failed run DataCite query: {e}")
