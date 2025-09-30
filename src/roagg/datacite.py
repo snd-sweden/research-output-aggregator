@@ -2,6 +2,7 @@ from typing import List
 import urllib.request
 import logging
 import json
+from roagg.utils import get_roagg_version
 from roagg.research_output_item import ResearchOutputItem
 from roagg.utils import match_patterns
 
@@ -60,7 +61,8 @@ class DataCiteAPI:
     @staticmethod
     def get_api_result(url: str) -> dict:
         request = urllib.request.Request(url)
-        request.add_header('User-Agent', 'Research output aggregator')
+        version = get_roagg_version()
+        request.add_header('User-Agent', f'ResearchOutputAggregator/{version} (https://github.com/snd-sweden/research-output-aggregator; mailto:team-it@snd.se)')
         try:
             with urllib.request.urlopen(request) as response:
                 return json.loads(response.read())
@@ -80,6 +82,7 @@ class DataCiteAPI:
             publisher=publisher_attr.get("name"),
             publicationYear=attributes.get("publicationYear"),
             title=item["attributes"]["titles"][0]["title"],
+            inDataCite=True
         )
 
         if record.resourceType is None or record.resourceType == "":

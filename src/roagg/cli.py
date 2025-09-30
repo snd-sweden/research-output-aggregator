@@ -4,7 +4,7 @@ import argparse
 import logging
 import sys
 from pathlib import Path
-
+from roagg.utils import get_roagg_version
 from roagg.aggregator import aggregate
 
 def validate_ror_id(ror_id: str) -> str:
@@ -28,6 +28,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Aggregate research outputs for an organization into a CSV file",
         formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {get_roagg_version()}"
     )
 
     parser.add_argument(

@@ -1,3 +1,4 @@
+import importlib.metadata
 import re
 
 def match_patterns(string, patterns):
@@ -25,3 +26,10 @@ def pattern_to_regexp(pattern: str) -> str:
         else:
             regex += re.escape(char)
     return '^' + regex + '$'
+
+def get_roagg_version() -> str:
+    """Get package version from metadata."""
+    try:
+        return importlib.metadata.version("roagg")
+    except importlib.metadata.PackageNotFoundError:
+        return "unknown"
