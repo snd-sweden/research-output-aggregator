@@ -31,7 +31,7 @@ def aggregate(name: List[str] = [], ror: str = "", output: str = "output.csv") -
     openaire = OpenAireAPI(ror=ror, results=research_output_items)
     openaire_id = openaire.get_openaire_id_from_ror()
     logging.info(f"OpenAire ID from ROR {ror} : {openaire_id}")
-    records = openaire.get_records()
+    openaire.get_records()
 
     logging.info(f"Writing: {output}")
     
