@@ -144,7 +144,7 @@ class DataCiteAPI:
         while True:
             response = self.get_api_result(url)
             result.extend(response["data"])
-            logging.info(f"Retrieved {len(result)} of {response['meta']['total']}")
+            logging.info(f"Retrieved DataCite {len(result)} of {response['meta']['total']}")
             if response['links'].get('next'):
                 url = response['links']['next']
             else:

@@ -1,6 +1,8 @@
+import sys
 from typing import List
 from roagg.ror import get_names_from_ror
 from roagg.datacite import DataCiteAPI
+from roagg.openaire import OpenAireAPI
 import logging
 from roagg.research_output_item import ResearchOutputItem
 import json
@@ -25,7 +27,12 @@ def aggregate(name: List[str] = [], ror: str = "", output: str = "output.csv") -
     logging.info(f"Checking {len(records)} records...")
     for record in records:
         research_output_items.append(datacite.get_record(record))
-    
+
+    openaire = OpenAireAPI(ror=ror, results=research_output_items)
+    openaire_id = openaire.get_openaire_id_from_ror()
+    logging.info(f"OpenAire ID from ROR {ror} : {openaire_id}")
+    records = openaire.get_records()
+
     logging.info(f"Writing: {output}")
     
     write_csv(research_output_items, output)
@@ -45,7 +52,12 @@ def write_csv(records: List[str], output: str,) -> None:
                 "isLatestVersion",
                 "isConceptDoi",
                 "createdAt",
-                "updatedAt"
+                "updatedAt",
+                "inDataCite",
+                "inOpenAire",
+                "openAireBestAccessRight",
+                "openAireIndicatorsDownloads",
+                "openAireIndicatorsViews",
             ]
 
     with open(output, 'w', newline='', encoding='utf-8') as file:
@@ -66,7 +78,12 @@ def write_csv(records: List[str], output: str,) -> None:
                 1 if r.isLatestVersion else 0,
                 1 if r.isConceptDoi else 0,
                 r.createdAt,
-                r.updatedAt
+                r.updatedAt,
+                1 if r.inDataCite else 0 if r.inDataCite is not None else "",
+                1 if r.inOpenAire else 0 if r.inOpenAire is not None else "",
+                r.openAireBestAccessRight if r.openAireBestAccessRight is not None else "",
+                r.openAireIndicatorsUsageCountsDownloads if r.openAireIndicatorsUsageCountsDownloads is not None else "",
+                r.openAireIndicatorsUsageCountsViews if r.openAireIndicatorsUsageCountsViews is not None else "",
             ]
             for r in records
         ])

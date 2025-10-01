@@ -8,7 +8,7 @@ from roagg.utils import get_roagg_version
 from roagg.aggregator import aggregate
 
 def validate_ror_id(ror_id: str) -> str:
-    """Validate ROR ID format (should start with https://ror.org/)."""
+    """validate ROR ID format (should start with https://ror.org/)."""
     if not ror_id.startswith('https://ror.org/'):
         raise argparse.ArgumentTypeError("ROR ID must start with 'https://ror.org/'")
     return ror_id
@@ -22,30 +22,30 @@ def read_names_from_file(filepath: Path) -> List[str]:
         sys.exit(1)
 
 def main() -> None:
-    """Create a summary CSV file for all research output for an organization."""
+    """create a summary CSV file for all research output for an organization."""
     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
     parser = argparse.ArgumentParser(
-        description="Aggregate research outputs for an organization into a CSV file",
+        description="aggregate research outputs for an organization into a CSV file",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     
     parser.add_argument(
         "--version",
         action="version",
-        version=f"%(prog)s {get_roagg_version()}"
+        version=get_roagg_version()
     )
 
     parser.add_argument(
         "--name",
         type=str,
         action='append',
-        help="Name variant of the organization (can be used multiple times)"
+        help="name variant of the organization (can be used multiple times)"
     )
     parser.add_argument(
         "--name-txt",
         type=Path,
-        help="Path to text file containing organization name variants (one per line)"
+        help="path to text file containing organization name variants (one per line)"
     )
 
     parser.add_argument(
@@ -58,7 +58,7 @@ def main() -> None:
         "--source",
         default="api",
         choices=["api"],
-        help="Source for resource aggregation (only api is supported right now)"
+        help="source for resource aggregation (only api is supported right now)"
     )
 
     parser.add_argument(
