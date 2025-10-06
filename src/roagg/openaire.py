@@ -28,6 +28,11 @@ class OpenAireAPI:
             return []
         openaire_results = []
         openaire_id = self.get_openaire_id_from_ror()
+        
+        if not openaire_id:
+            logging.info(f"No OpenAire ID found for ROR {self.ror}")
+            return []
+
         params = {
             'pageSize': self.page_size,
             'cursor': '*',
