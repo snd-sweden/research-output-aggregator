@@ -43,6 +43,10 @@ bool isConceptDoi
 List arguments:  
 `roagg --help`  
 
+## Tests
+Some tests are available, to run them:  
+`python -m pytest`
+
 ### Some example arguments
 Chalmers with ror and name list:  
 ```bash

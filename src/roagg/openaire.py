@@ -3,7 +3,7 @@ import urllib.request
 import logging
 import json
 from roagg.research_output_item import ResearchOutputItem
-from roagg.utils import match_patterns
+from roagg.utils import find_doi_in_text, is_valid_doi
 
 class OpenAireAPI:
     openaire_base_url = "https://api.openaire.eu/graph/v1/"
@@ -102,15 +102,21 @@ class OpenAireAPI:
                         doi_list.append(alternateIdentifier['value'])
 
             if len(doi_list) == 0:
+                # Normalize URLs to standard DOI format
+                url_replacements = [
+                    ("https://doi.pangaea.de/", "https://doi.org/"),
+                    ("https://zenodo.org/doi/", "https://doi.org/"),
+                    ("https://zenodo.org/records/", "https://doi.org/10.5281/zenodo.")
+                ]
+                
                 for url in instance['urls']:
-                    url = url.replace("http://dx.doi.org/", "")
-                    url = url.replace("https://dx.doi.org/", "")
-                    url = url.replace("https://doi.pangaea.de/", "")
-                    url = url.replace("https://zenodo.org/doi/", "")
-                    url = url.replace("https://zenodo.org/records/", "10.5281/zenodo.")
+                    normalized_url = url
+                    for old_pattern, new_pattern in url_replacements:
+                        normalized_url = normalized_url.replace(old_pattern, new_pattern)
 
-                    if match_patterns(url, [r'10\.\d{4,9}/[-._;()/:A-Z0-9]+$']):
-                        doi_list.append(url)
+                    for doi in find_doi_in_text(normalized_url):
+                        if is_valid_doi(doi):
+                            doi_list.append(doi)
 
         # if doi_list is empty print json for instances
         if len(doi_list) == 0:

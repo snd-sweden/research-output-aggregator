@@ -19,3 +19,30 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+# Specify test directory
+testpaths = ["tests"]
+
+# Minimum version of pytest
+minversion = "6.0"
+
+# Add command line options that are always used
+addopts = [
+    "-ra",              # Show summary of all test outcomes
+    "--strict-markers", # Raise error on unknown markers
+    "--strict-config",  # Raise error on invalid config
+    "--showlocals",     # Show local variables in tracebacks
+]
+
+# Configure test discovery patterns
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+# Define custom markers (optional, for organizing tests)
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]

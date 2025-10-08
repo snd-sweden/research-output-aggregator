@@ -1,6 +1,14 @@
 import importlib.metadata
 import re
 
+doi_pattern = re.compile(r'^10\.\d{4,9}/[-._;()/:A-Z0-9]+$', re.IGNORECASE)
+
+def is_valid_doi(s: str) -> bool:
+    return bool(doi_pattern.match(s))
+
+def find_doi_in_text(text: str) -> str | None:
+    return re.findall(r'\b10\.\d{4,9}/[-.;()/:\w]+', text)
+
 def match_patterns(string, patterns):
     if string is None:
         return False
