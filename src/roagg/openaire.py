@@ -75,14 +75,34 @@ class OpenAireAPI:
                     openAireIndicatorsUsageCountsViews = r['indicators']['usageCounts']['views']
             
             dois = self.get_doi_list_from_resource(r)
+            recordMatch = False
             for doi in dois:
                 item = doi_to_item.get(doi.lower())
                 if item:
+                    recordMatch = True
                     item.openAireBestAccessRight = openAireBestAccessRight
                     item.openAireIndicatorsUsageCountsDownloads = openAireIndicatorsUsageCountsDownloads
                     item.openAireIndicatorsUsageCountsViews = openAireIndicatorsUsageCountsViews
                     item.inOpenAire = True
-        
+            if not recordMatch and len(dois) > 0:
+                publication_date = r.get('publicationDate', None)
+                publication_year = None
+                if publication_date:
+                    publication_year = publication_date[:4] if len(publication_date) >= 4 else None
+                
+                self.results.append(ResearchOutputItem(
+                    doi=dois[0],
+                    resourceType=r.get('type', None),
+                    title=r.get('mainTitle', None),
+                    publisher=r.get('publisher', None),
+                    publicationYear=publication_year,
+                    inOpenAire=True,
+                    openAireBestAccessRight=openAireBestAccessRight,
+                    openAireIndicatorsUsageCountsDownloads=openAireIndicatorsUsageCountsDownloads,
+                    openAireIndicatorsUsageCountsViews=openAireIndicatorsUsageCountsViews,
+                    openAireId=r.get('id', None)
+                ))
+
         return openaire_results
 
     def get_doi_list_from_resource(self, resource: dict) -> List[str]:

@@ -67,7 +67,7 @@ def write_csv(records: List[str], output: str,) -> None:
         writer.writerows([
             [
                 r.doi,
-                r.clientId,
+                r.clientId if r.clientId is not None else "",
                 r.publicationYear,
                 r.resourceType,
                 r.title,
