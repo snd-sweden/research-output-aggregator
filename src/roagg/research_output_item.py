@@ -11,6 +11,7 @@ class ResearchOutputItem:
     createdAt: str = ""
     updatedAt: str = "" 
     isPublisher: bool = False
+    isFunder: bool = None
     haveCreatorAffiliation: bool = False
     haveContributorAffiliation: bool = False
     isLatestVersion: bool = True
@@ -34,3 +35,5 @@ class ResearchOutputItem:
     openAireIndicatorsUsageCountsDownloads: int = None
     openAireIndicatorsUsageCountsViews: int = None
     openAireId: str = None
+    #extra fields
+    titleWordCount: int = None

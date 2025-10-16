@@ -1,6 +1,6 @@
 [project]
 name = "roagg"
-version = "2025.0.7"
+version = "2025.0.8"
 requires-python = ">=3.10"
 dependencies = []
 

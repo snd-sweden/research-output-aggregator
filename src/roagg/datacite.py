@@ -4,7 +4,7 @@ import logging
 import json
 from roagg.utils import get_roagg_version
 from roagg.research_output_item import ResearchOutputItem
-from roagg.utils import match_patterns
+from roagg.utils import match_patterns, string_word_count
 
 class DataCiteAPI:
     def __init__(self, page_size: int = 500, name: List[str] = [], ror: str = ""):
@@ -36,7 +36,8 @@ class DataCiteAPI:
                 "creators.affiliation.affiliationIdentifier", 
                 "contributors.affiliation.affiliationIdentifier",
                 "creators.nameIdentifiers.nameIdentifier",
-                "contributors.nameIdentifiers.nameIdentifier"
+                "contributors.nameIdentifiers.nameIdentifier",
+                "fundingReferences.funderIdentifier"
             ]
             query_parts.extend([f'{field}:"{self.ror}"' for field in ror_fields])
             # nameIdentifiers are formated without https://ror.org/ prefix from some sources, so we need to check both
@@ -82,7 +83,8 @@ class DataCiteAPI:
             publisher=publisher_attr.get("name"),
             publicationYear=attributes.get("publicationYear"),
             title=item["attributes"]["titles"][0]["title"],
-            inDataCite=True
+            inDataCite=True,
+            titleWordCount=string_word_count(item["attributes"]["titles"][0]["title"])
         )
 
         if record.resourceType is None or record.resourceType == "":

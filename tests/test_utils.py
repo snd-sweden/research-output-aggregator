@@ -1,5 +1,5 @@
 import pytest
-from roagg.utils import is_valid_doi, find_doi_in_text
+from roagg.utils import is_valid_doi, find_doi_in_text, string_word_count
 
 
 class TestIsValidDoi:
@@ -206,3 +206,50 @@ class TestFindDoiInText:
         assert len(result) == 2
         assert "10.1038/nature12373" in result
         assert "10.1126/science.1259855" in result
+
+class TestStringWordCount:
+    def test_single_word(self):
+        """Test with a single word."""
+        assert string_word_count("file.csv") == 1
+        assert string_word_count("another_file[2].jpg") == 1
+
+    def test_multiple_words(self):
+        """Test with multiple words."""
+        assert string_word_count("Hello World from Roagg") == 4
+
+    def test_leading_trailing_spaces(self):
+        """Test with leading and trailing spaces."""
+        # "Leading and trailing spaces" = 4 words (not 5)
+        assert string_word_count("   Leading and trailing spaces   ") == 4
+
+    def test_multiple_spaces_between_words(self):
+        """Test with multiple spaces between words."""
+        # "Multiple spaces between words" = 4 words (not 5)
+        assert string_word_count("Multiple   spaces   between   words") == 4
+
+    def test_empty_string(self):
+        """Test with an empty string."""
+        assert string_word_count("") == 0
+
+    def test_string_with_only_spaces(self):
+        """Test with a string containing only spaces."""
+        assert string_word_count("     ") == 0
+
+    def test_string_with_newlines_and_tabs(self):
+        """Test with newlines and tabs."""
+        assert string_word_count("Hello\nWorld\tfrom Roagg") == 4
+
+    def test_string_with_punctuation(self):
+        """Test with punctuation - split() doesn't separate on punctuation."""
+        # "Hello, world! This is Roagg." = 5 words (punctuation stays attached)
+        assert string_word_count("Hello, world! This is Roagg.") == 5
+
+    def test_string_with_special_characters(self):
+        """Test with special characters - split() doesn't separate on special chars."""
+        # "datafile.csv is ready!" = 3 words
+        assert string_word_count("datafile.csv is ready!  ") == 3
+
+    def test_string_with_numeric_characters(self):
+        """Test with numeric characters - split() doesn't separate on dots."""
+        # "Version 2.0 of the software" = 5 words (2.0 is one word)
+        assert string_word_count("Version 2.0 of the software    ") == 5

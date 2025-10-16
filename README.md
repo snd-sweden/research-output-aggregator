@@ -55,7 +55,7 @@ roagg --ror https://ror.org/040wg7k59 --name-txt tests/name-lists/chalmers.txt -
 
 GU with ror, name list and extra name not in the text file:  
 ```bash
-roagg --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name-txt tests/name-lists/gu.txt --output gu.csv
+roagg --name "Department of Nephrology Gothenburg" --ror https://ror.org/01tm6cn81 --name-txt tests/name-lists/gu.txt --output data/gu.csv
 ```
 
 KTH with ror and name list:  
@@ -68,7 +68,5 @@ KAU with ror:
 roagg --ror https://ror.org/05s754026 --output kau.csv
 ```
 
-Chalmers with ror, name list:  
-```bash
-roagg --ror https://ror.org/040wg7k59 --name-txt tests/name-lists/chalmers.txt --output chalmers.csv
-```
+## License
+[MIT License](LICENSE)
