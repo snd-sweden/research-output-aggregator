@@ -1,0 +1,46 @@
+swe* univ* agr*
+swe* univ* of agr*
+swe* agr* univ*
+agr* univ* of swe*
+agr* univ* swe*
+swe* coll* of agr*
+swe* agr* coll*
+agr* coll* of swe*
+agr* coll* swe*
+suas swe*
+sve* lantbruksuniv*
+sve* lantbruks univ*
+artdatabanken
+slu aqua
+slu biocent*
+uppsala biocent*
+s*tvattenslaboratoriet
+kustlaboratoriet
+havsfiskelaboratoriet
+slu sverige
+slu swe*
+slu alnarp
+slu asa
+slu balsg*rd
+slu drottningholm
+slu grims*
+slu g*tala
+slu kungs*ng*
+slu lanna
+slu lomma
+slu lysekil
+slu l*vsta
+slu funbo*l*vsta
+slu l*nnstorp
+slu r*b*cksdalen
+slu siljansfors
+slu skara
+slu skinnskatteberg
+slu stockholm
+slu t*nnersj*heden
+slu ultuna
+slu ume*
+slu uppsala
+slu vindeln
+slu agr* univ*
+suas agr* univ*
