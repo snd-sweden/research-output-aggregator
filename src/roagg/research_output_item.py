@@ -3,14 +3,15 @@ from dataclasses import dataclass
 @dataclass
 class ResearchOutputItem:
     doi: str
-    clientId: str
-    publicationYear: int
-    resourceType: str
-    title: str
-    publisher: str
+    clientId: str = None
+    publicationYear: int = None
+    resourceType: str = None
+    title: str = None
+    publisher: str = None
     createdAt: str = ""
     updatedAt: str = "" 
     isPublisher: bool = False
+    isFunder: bool = None
     haveCreatorAffiliation: bool = False
     haveContributorAffiliation: bool = False
     isLatestVersion: bool = True
@@ -33,3 +34,6 @@ class ResearchOutputItem:
     openAireBestAccessRight: str = None
     openAireIndicatorsUsageCountsDownloads: int = None
     openAireIndicatorsUsageCountsViews: int = None
+    openAireId: str = None
+    #extra fields
+    titleWordCount: int = None

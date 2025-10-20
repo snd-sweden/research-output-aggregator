@@ -41,3 +41,9 @@ def get_roagg_version() -> str:
         return importlib.metadata.version("roagg")
     except importlib.metadata.PackageNotFoundError:
         return "unknown"
+
+def string_word_count(string: str) -> int:
+    """Count words in a string after trimming whitespace."""
+    if not string:
+        return 0
+    return len(string.strip().split())

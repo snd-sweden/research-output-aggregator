@@ -3,7 +3,7 @@ import urllib.request
 import logging
 import json
 from roagg.research_output_item import ResearchOutputItem
-from roagg.utils import find_doi_in_text, is_valid_doi
+from roagg.utils import find_doi_in_text, is_valid_doi, string_word_count
 
 class OpenAireAPI:
     openaire_base_url = "https://api.openaire.eu/graph/v1/"
@@ -75,14 +75,41 @@ class OpenAireAPI:
                     openAireIndicatorsUsageCountsViews = r['indicators']['usageCounts']['views']
             
             dois = self.get_doi_list_from_resource(r)
+            recordMatch = False
             for doi in dois:
                 item = doi_to_item.get(doi.lower())
                 if item:
+                    recordMatch = True
                     item.openAireBestAccessRight = openAireBestAccessRight
                     item.openAireIndicatorsUsageCountsDownloads = openAireIndicatorsUsageCountsDownloads
                     item.openAireIndicatorsUsageCountsViews = openAireIndicatorsUsageCountsViews
                     item.inOpenAire = True
-        
+            if not recordMatch and len(dois) > 0:
+                publication_date = r.get('publicationDate', None)
+                publication_year = None
+                if publication_date:
+                    publication_year = publication_date[:4] if len(publication_date) >= 4 else None
+                item = ResearchOutputItem(
+                    doi=dois[0],
+                    isPublisher=None,
+                    resourceType=r.get('type', None),
+                    title=r.get('mainTitle', None),
+                    publisher=r.get('publisher', None),
+                    publicationYear=publication_year,
+                    haveContributorAffiliation=None,
+                    haveCreatorAffiliation=None,
+                    isLatestVersion=None,
+                    isConceptDoi=None,
+                    inOpenAire=True,
+                    openAireBestAccessRight=openAireBestAccessRight,
+                    openAireIndicatorsUsageCountsDownloads=openAireIndicatorsUsageCountsDownloads,
+                    openAireIndicatorsUsageCountsViews=openAireIndicatorsUsageCountsViews,
+                    openAireId=r.get('id', None),
+                    titleWordCount=string_word_count(r.get('mainTitle', None))
+                )
+                self.results.append(item)
+                doi_to_item[item.doi.lower()] = item  # Add to lookup dictionary
+
         return openaire_results
 
     def get_doi_list_from_resource(self, resource: dict) -> List[str]:

@@ -58,6 +58,7 @@ def write_csv(records: List[str], output: str,) -> None:
                 "openAireBestAccessRight",
                 "openAireIndicatorsDownloads",
                 "openAireIndicatorsViews",
+                "titleWordCount",
             ]
 
     with open(output, 'w', newline='', encoding='utf-8') as file:
@@ -67,16 +68,16 @@ def write_csv(records: List[str], output: str,) -> None:
         writer.writerows([
             [
                 r.doi,
-                r.clientId,
+                r.clientId if r.clientId is not None else "",
                 r.publicationYear,
                 r.resourceType,
                 r.title,
                 r.publisher,
-                1 if r.isPublisher else 0,
-                1 if r.haveCreatorAffiliation else 0,
-                1 if r.haveContributorAffiliation else 0,
-                1 if r.isLatestVersion else 0,
-                1 if r.isConceptDoi else 0,
+                1 if r.isPublisher else 0 if r.isPublisher is not None else "",
+                1 if r.haveCreatorAffiliation else 0 if r.haveCreatorAffiliation is not None else "",
+                1 if r.haveContributorAffiliation else 0 if r.haveContributorAffiliation is not None else "",
+                1 if r.isLatestVersion else 0 if r.isLatestVersion is not None else "",
+                1 if r.isConceptDoi else 0 if r.isConceptDoi is not None else "",
                 r.createdAt,
                 r.updatedAt,
                 1 if r.inDataCite else 0 if r.inDataCite is not None else "",
@@ -84,6 +85,7 @@ def write_csv(records: List[str], output: str,) -> None:
                 r.openAireBestAccessRight if r.openAireBestAccessRight is not None else "",
                 r.openAireIndicatorsUsageCountsDownloads if r.openAireIndicatorsUsageCountsDownloads is not None else "",
                 r.openAireIndicatorsUsageCountsViews if r.openAireIndicatorsUsageCountsViews is not None else "",
+                r.titleWordCount if r.titleWordCount is not None else "",
             ]
             for r in records
         ])
