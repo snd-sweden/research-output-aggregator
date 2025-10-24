@@ -37,3 +37,4 @@ class ResearchOutputItem:
     openAireId: str = None
     #extra fields
     titleWordCount: int = None
+    referencedByDoi: str = None

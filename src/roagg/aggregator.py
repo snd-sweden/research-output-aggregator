@@ -59,6 +59,7 @@ def write_csv(records: List[str], output: str,) -> None:
                 "openAireIndicatorsDownloads",
                 "openAireIndicatorsViews",
                 "titleWordCount",
+                "referencedByDOI",
             ]
 
     with open(output, 'w', newline='', encoding='utf-8') as file:
@@ -86,6 +87,7 @@ def write_csv(records: List[str], output: str,) -> None:
                 r.openAireIndicatorsUsageCountsDownloads if r.openAireIndicatorsUsageCountsDownloads is not None else "",
                 r.openAireIndicatorsUsageCountsViews if r.openAireIndicatorsUsageCountsViews is not None else "",
                 r.titleWordCount if r.titleWordCount is not None else "",
+                r.referencedByDoi if r.referencedByDoi is not None else "",
             ]
             for r in records
         ])

@@ -103,6 +103,15 @@ class DataCiteAPI:
             match_patterns(publisher_attr.get("name"), self.name)
         )
 
+        related = [
+            r for r in item["attributes"].get("relatedIdentifiers", [])
+            if r.get("resourceTypeGeneral") == "Text" and r.get("relatedIdentifierType") == "DOI"
+        ]
+        if related and len(related) > 0:
+            record.referencedByDoi = related[0].get("relatedIdentifier")
+        else:
+            record.referencedByDoi = None
+
         record.createdAt = str(attributes.get("created", "") or "")
 
         record.updatedAt = max([
