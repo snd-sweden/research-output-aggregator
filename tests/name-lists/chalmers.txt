@@ -1,12 +1,21 @@
-CHALMERS*
-Chalmers*
-*Chalmers
-*CHALMERS*
-*Chalmers*
-Chalmers *
-Onsala *
-ONSALA *
-Chalmers* Onsala*
-Chalmers te*
-Chalmers Te*
-department * chalmers
+*?halmers ?niversity * ?echn*
+*?HALMERS ?NIVERSITY * ?ECHN*
+*?halmers ?niv*
+*?HALMERS ?NIV*
+*?niv * Chalmers*
+*?NIV * CHALMERS*
+*?halmers ?echn*
+*?halmers ?ekn*
+*?HALMERS TECHN*
+*?HALMERS TEKN*
+*?halmers * ?ögskola*
+*?halmers * ?ogskola*
+*?HALMERS * ?ÖGSKOLA*
+*?halmers * ?OGSKOLA*
+*Onsala *
+*ONSALA *
+*?halmers* ?nsala*
+*?HALMERS* ONSALA*
+Chalmers
+chalmers
+CHALMERS
