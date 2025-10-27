@@ -19,7 +19,7 @@ class DataCiteAPI:
         query_parts = []
         
         if self.name:
-            # Separate wildcard and exact matches (we probably need to fix how spaces are handled in the encoded URL)
+            # Separate wildcard and exact matches, handle spaces in wildcard queries appropriately
             wildcard = ' OR '.join(f'{n.replace(" ", "\\ ")}' for n in self.name if '*' in n)
             exact = ' OR '.join(f'"{n}"' for n in self.name if '*' not in n)
             name_fields = [
