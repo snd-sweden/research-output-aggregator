@@ -105,7 +105,7 @@ class DataCiteAPI:
 
         related = [
             r for r in item["attributes"].get("relatedIdentifiers", [])
-            if r.get("resourceTypeGeneral") == "Text" and r.get("relatedIdentifierType") == "DOI"
+            if (r.get("relationType") == "IsReferencedBy" or r.get("relationType") == "IsSupplementTo" or r.get("relationType") == "IsSourceOf") and r.get("relatedIdentifierType") == "DOI"
         ]
         if related and len(related) > 0:
             record.referencedByDoi = related[0].get("relatedIdentifier")
