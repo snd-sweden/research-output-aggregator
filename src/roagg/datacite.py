@@ -20,7 +20,7 @@ class DataCiteAPI:
         
         if self.name:
             # Separate wildcard and exact matches, handle spaces in wildcard queries appropriately
-            wildcard = ' OR '.join(f'{n.replace(" ", "\\ ")}' for n in self.name if '*' in n)
+            wildcard = ' OR '.join(n.replace(" ", "\\ ") for n in self.name if '*' in n)
             exact = ' OR '.join(f'"{n}"' for n in self.name if '*' not in n)
             name_fields = [
                 "creators.affiliation.name",
