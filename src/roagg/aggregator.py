@@ -1,32 +1,59 @@
-import sys
+import csv
+import logging
 from typing import List
-from roagg.ror import get_names_from_ror
+
 from roagg.datacite import DataCiteAPI
 from roagg.openaire import OpenAireAPI
-import logging
 from roagg.research_output_item import ResearchOutputItem
-import json
-import csv
+from roagg.ror import get_names_from_ror
+from roagg.utils import wildcard_match
+
 
 def aggregate(name: List[str] = [], ror: str = "", output: str = "output.csv") -> None:
-    if ror:
-        ror_name = get_names_from_ror(ror)
-        name.extend(ror_name)
-    
-    # remove duplicates
-    name = list(set(name))
+    # Store original name filters for client-side processing.
+    # DataCiteAPI may not interpret wildcards, and we don't want to use ROR-derived names
+    # as wildcard patterns. Use a set for automatic de-duplication.
+    original_name_filters = set(name)
 
-    datacite = DataCiteAPI(name=name, ror=ror)
+    # Combine original names with ROR-derived names for the DataCiteAPI query.
+    api_query_names = set(name)
+    if ror:
+        ror_names = get_names_from_ror(ror)
+        api_query_names.update(ror_names)
+
+    datacite = DataCiteAPI(name=list(api_query_names), ror=ror)
     url = datacite.api_request_url()
-    # debug print of the query string
     logging.info("DataCite url:")
     logging.info(url)
 
     records = datacite.all()
-    research_output_items = []
-    logging.info(f"Checking {len(records)} records...")
+
+    # Process all records received from DataCite into ResearchOutputItem objects first.
+    # This allows for consistent client-side filtering afterwards.
+    all_parsed_items = []
+    logging.info(f"Attempting to parse {len(records)} records retrieved from DataCite...")
     for record in records:
-        research_output_items.append(datacite.get_record(record))
+        item = datacite.get_record(record)
+        if item:  # get_record might return None if parsing fails
+            all_parsed_items.append(item)
+
+    logging.info(f"Successfully parsed {len(all_parsed_items)} research output items from DataCite results.")
+
+    # Apply client-side filtering using wildcard_match if original_name_filters were provided.
+    if original_name_filters:
+        logging.info(f"Applying client-side name filters: {original_name_filters}")
+        # An item is kept if its title or publisher matches ANY of the provided patterns.
+        research_output_items = [
+            item for item in all_parsed_items
+            if any(
+                wildcard_match(pattern, item.title or "") or wildcard_match(pattern, item.publisher or "")
+                for pattern in original_name_filters
+            )
+        ]
+        logging.info(f"Filtered down to {len(research_output_items)} items after applying name filters.")
+    else:
+        # If no client-side name filters, all parsed items are kept.
+        research_output_items = all_parsed_items
 
     openaire = OpenAireAPI(ror=ror, results=research_output_items)
     openaire_id = openaire.get_openaire_id_from_ror()
@@ -34,21 +61,22 @@ def aggregate(name: List[str] = [], ror: str = "", output: str = "output.csv") -
     openaire.get_records()
 
     logging.info(f"Writing: {output}")
-    
+
     write_csv(research_output_items, output)
     logging.info(f"Writing output to csv: {output} - Done")
 
-def write_csv(records: List[str], output: str,) -> None:
+
+def write_csv(records: List[ResearchOutputItem], output: str,) -> None:
     header = [
-                "doi", 
+                "doi",
                 "clientId",
-                "publicationYear", 
+                "publicationYear",
                 "resourceType",
-                "title", 
-                "publisher", 
-                "isPublisher", 
-                "haveCreatorAffiliation", 
-                "haveContributorAffiliation", 
+                "title",
+                "publisher",
+                "isPublisher",
+                "haveCreatorAffiliation",
+                "haveContributorAffiliation",
                 "isLatestVersion",
                 "isConceptDoi",
                 "createdAt",
@@ -65,7 +93,7 @@ def write_csv(records: List[str], output: str,) -> None:
     with open(output, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(header)
-        
+
         writer.writerows([
             [
                 r.doi,
