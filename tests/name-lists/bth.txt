@@ -1,0 +1,10 @@
+blekinge inst* tech*
+blekinge inst* of tech*
+blekinge tech* inst*
+blekinge tech* univ*
+blekinge tek* hogsk*
+blekinge tek* hgsk*
+blekinge univ* tech*
+univ* karlskrona
+hogsk* karlskrona
+hgsk* karlskrona
