@@ -10,6 +10,8 @@ def find_doi_in_text(text: str) -> str | None:
     return re.findall(r'\b10\.\d{4,9}/[-.;()/:\w]+', text)
 
 def remove_resolver_prefix_from_doi(doi: str) -> str:
+    if doi is None:
+        return None
     prefixes = [
         "https://doi.org/",
         "http://doi.org/",
