@@ -79,6 +79,8 @@ class OpenAlexAPI:
             if doi is None:
                 continue
 
+            recordMatch = False
+
             item = doi_to_item.get(doi.lower())
             if item:
                 recordMatch = True
