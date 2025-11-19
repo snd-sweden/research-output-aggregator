@@ -2,8 +2,8 @@ from typing import List
 import urllib.request
 import logging
 import json
-from roagg.research_output_item import ResearchOutputItem
-from roagg.utils import find_doi_in_text, is_valid_doi, string_word_count
+from roagg.models.research_output_item import ResearchOutputItem
+from roagg.helpers.utils import find_doi_in_text, is_valid_doi, string_word_count
 
 class OpenAireAPI:
     openaire_base_url = "https://api.openaire.eu/graph/v1/"

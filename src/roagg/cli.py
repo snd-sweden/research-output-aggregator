@@ -4,7 +4,7 @@ import argparse
 import logging
 import sys
 from pathlib import Path
-from roagg.utils import get_roagg_version
+from roagg.helpers.utils import get_roagg_version
 from roagg.aggregator import aggregate
 
 def validate_ror_id(ror_id: str) -> str:

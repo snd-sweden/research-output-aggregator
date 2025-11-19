@@ -1,12 +1,13 @@
 import sys
 from typing import List
-from roagg.ror import get_names_from_ror
-from roagg.datacite import DataCiteAPI
-from roagg.openaire import OpenAireAPI
+from roagg.helpers.ror import get_names_from_ror
+from roagg.providers.datacite import DataCiteAPI
+from roagg.providers.openaire import OpenAireAPI
 import logging
-from roagg.research_output_item import ResearchOutputItem
+from roagg.models.research_output_item import ResearchOutputItem
 import json
 import csv
+from dataclasses import fields
 
 def aggregate(name: List[str] = [], ror: str = "", output: str = "output.csv") -> None:
     if ror:
@@ -38,56 +39,25 @@ def aggregate(name: List[str] = [], ror: str = "", output: str = "output.csv") -
     write_csv(research_output_items, output)
     logging.info(f"Writing output to csv: {output} - Done")
 
-def write_csv(records: List[str], output: str,) -> None:
-    header = [
-                "doi", 
-                "clientId",
-                "publicationYear", 
-                "resourceType",
-                "title", 
-                "publisher", 
-                "isPublisher", 
-                "haveCreatorAffiliation", 
-                "haveContributorAffiliation", 
-                "isLatestVersion",
-                "isConceptDoi",
-                "createdAt",
-                "updatedAt",
-                "inDataCite",
-                "inOpenAire",
-                "openAireBestAccessRight",
-                "openAireIndicatorsDownloads",
-                "openAireIndicatorsViews",
-                "titleWordCount",
-                "referencedByDOI",
-            ]
+def write_csv(records: List[ResearchOutputItem], output: str) -> None:
+    # Get field names from the dataclass
+    dataclass_fields = fields(ResearchOutputItem)
+    header = [field.name for field in dataclass_fields]
+    
+    def format_value(value):
+        """Format values for CSV output"""
+        if value is None:
+            return ""
+        elif isinstance(value, bool):
+            return 1 if value else 0
+        else:
+            return value
 
     with open(output, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(header)
         
         writer.writerows([
-            [
-                r.doi,
-                r.clientId if r.clientId is not None else "",
-                r.publicationYear,
-                r.resourceType,
-                r.title,
-                r.publisher,
-                1 if r.isPublisher else 0 if r.isPublisher is not None else "",
-                1 if r.haveCreatorAffiliation else 0 if r.haveCreatorAffiliation is not None else "",
-                1 if r.haveContributorAffiliation else 0 if r.haveContributorAffiliation is not None else "",
-                1 if r.isLatestVersion else 0 if r.isLatestVersion is not None else "",
-                1 if r.isConceptDoi else 0 if r.isConceptDoi is not None else "",
-                r.createdAt,
-                r.updatedAt,
-                1 if r.inDataCite else 0 if r.inDataCite is not None else "",
-                1 if r.inOpenAire else 0 if r.inOpenAire is not None else "",
-                r.openAireBestAccessRight if r.openAireBestAccessRight is not None else "",
-                r.openAireIndicatorsUsageCountsDownloads if r.openAireIndicatorsUsageCountsDownloads is not None else "",
-                r.openAireIndicatorsUsageCountsViews if r.openAireIndicatorsUsageCountsViews is not None else "",
-                r.titleWordCount if r.titleWordCount is not None else "",
-                r.referencedByDoi if r.referencedByDoi is not None else "",
-            ]
-            for r in records
+            [format_value(getattr(record, field.name)) for field in dataclass_fields]
+            for record in records
         ])

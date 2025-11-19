@@ -2,9 +2,9 @@ from typing import List
 import urllib.request
 import logging
 import json
-from roagg.utils import get_roagg_version
-from roagg.research_output_item import ResearchOutputItem
-from roagg.utils import match_patterns, string_word_count
+from roagg.helpers.utils import get_roagg_version
+from roagg.models.research_output_item import ResearchOutputItem
+from roagg.helpers.utils import match_patterns, string_word_count
 
 class DataCiteAPI:
     def __init__(self, page_size: int = 500, name: List[str] = [], ror: str = ""):

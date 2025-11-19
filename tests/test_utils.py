@@ -1,5 +1,5 @@
 import pytest
-from roagg.utils import is_valid_doi, find_doi_in_text, string_word_count
+from roagg.helpers.utils import is_valid_doi, find_doi_in_text, string_word_count
 
 
 class TestIsValidDoi:
