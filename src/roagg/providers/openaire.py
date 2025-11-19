@@ -23,7 +23,7 @@ class OpenAireAPI:
             else:
                 return ""
 
-    def get_records(self) -> List[dict]:
+    def get_records(self) -> List[ResearchOutputItem]:
         if not self.ror:
             return []
         openaire_results = []

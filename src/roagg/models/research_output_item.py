@@ -3,7 +3,8 @@ from dataclasses import dataclass
 @dataclass
 class ResearchOutputItem:
     doi: str
-    clientId: str = None
+    dataCiteClientId: str = None
+    dataCiteClientName: str = None
     publicationYear: int = None
     resourceType: str = None
     title: str = None
@@ -29,12 +30,17 @@ class ResearchOutputItem:
     #where was the match found
     inDataCite: bool = None
     inOpenAire: bool = None
+    inOpenAlex: bool = None
     inCrossRef: bool = None
     #openaire specific
     openAireBestAccessRight: str = None
     openAireIndicatorsUsageCountsDownloads: int = None
     openAireIndicatorsUsageCountsViews: int = None
     openAireId: str = None
+    #openalex specific
+    openAlexId: str = None
+    openAlexCitedByCount: int = None
+    openAlexReferencedWorksCount: int = None
     #extra fields
     titleWordCount: int = None
     referencedByDoi: str = None

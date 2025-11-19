@@ -83,7 +83,7 @@ class DataCiteAPI:
 
         record = ResearchOutputItem(
             doi=attributes.get("doi"),
-            clientId=item["relationships"]["client"]["data"]["id"],
+            dataCiteClientId=item["relationships"]["client"]["data"]["id"],
             resourceType=attributes.get("types", None).get("resourceTypeGeneral"),
             publisher=publisher_attr.get("name"),
             publicationYear=attributes.get("publicationYear"),
