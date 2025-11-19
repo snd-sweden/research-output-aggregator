@@ -76,6 +76,8 @@ class OpenAlexAPI:
                         break
 
             doi = remove_resolver_prefix_from_doi(r.get('doi', None))
+            if doi is None:
+                continue
 
             item = doi_to_item.get(doi.lower())
             if item:
@@ -85,7 +87,7 @@ class OpenAlexAPI:
                 item.inOpenAlex = True
                 item.openAlexId = r.get('id', None)
                 item.haveCreatorAffiliation = haveCreatorAffiliation
-            if not recordMatch and len(dois) > 0:
+            if not recordMatch:
                 publication_date = r.get('publication_date', None)
                 publication_year = r.get('publication_year', None)
                 if publication_date:
