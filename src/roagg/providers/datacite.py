@@ -89,6 +89,10 @@ class DataCiteAPI:
             publicationYear=attributes.get("publicationYear"),
             title=item["attributes"]["titles"][0]["title"],
             inDataCite=True,
+            dataCiteCitationCount=attributes.get("citationCount", None),
+            dataCiteReferenceCount=attributes.get("referenceCount", None),
+            dataCiteViewCount=attributes.get("viewCount", None),
+            dataCiteDownloadCount=attributes.get("downloadCount", None),
             titleWordCount=string_word_count(item["attributes"]["titles"][0]["title"])
         )
 

@@ -3,8 +3,6 @@ from dataclasses import dataclass
 @dataclass
 class ResearchOutputItem:
     doi: str
-    dataCiteClientId: str = None
-    dataCiteClientName: str = None
     publicationYear: int = None
     resourceType: str = None
     title: str = None
@@ -32,6 +30,13 @@ class ResearchOutputItem:
     inOpenAire: bool = None
     inOpenAlex: bool = None
     inCrossRef: bool = None
+    #datacite specific
+    dataCiteClientId: str = None
+    dataCiteClientName: str = None
+    dataCiteCitationCount: int = None
+    dataCiteReferenceCount: int = None
+    dataCiteViewCount: int = None
+    dataCiteDownloadCount: int = None
     #openaire specific
     openAireBestAccessRight: str = None
     openAireIndicatorsUsageCountsDownloads: int = None
